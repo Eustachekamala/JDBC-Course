@@ -110,4 +110,61 @@ public class DbFunctions {
             e.printStackTrace();
         }
     }
+
+    //To search by id
+    public void search_by_id(Connection con, String table_name, int id){
+        Statement statement;
+        ResultSet rt = null;
+        try {
+            String query = String.format("select * from %s where empId='%s'", table_name, id);
+            statement = con.createStatement();
+            rt = statement.executeQuery(query);
+            while (rt.next()){
+                System.out.print(rt.getString("empId")+ " ");
+                System.out.print(rt.getString("name")+ " ");
+                System.out.println(rt.getString("address")+ " ");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //To delete by name
+    public void delete_row_by_name(Connection con, String table_name, String name){
+        Statement statement;
+        try {
+            String query = String.format("delete from %s where name='%s'", table_name, name);
+            statement = con.createStatement();
+            statement.executeUpdate(query);
+            System.out.println(name + " was deleted successfully in the " + table_name + " table");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //To delete by id
+    public void delete_row_by_id(Connection con, String table_name, int id){
+        Statement statement;
+        try {
+            String query = String.format("delete from %s where empId='%s'", table_name, id);
+            statement = con.createStatement();
+            statement.executeUpdate(query);
+            System.out.println("Employee was deleted successfully");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //To delete all the data in the table
+    public  void delete_table(Connection con, String table_name){
+        Statement statement;
+        try {
+            String query = String.format("drop table %s", table_name);
+            statement = con.createStatement();
+            statement.executeUpdate(query);
+            System.out.println("Table " + table_name + " was deleted successfully");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
